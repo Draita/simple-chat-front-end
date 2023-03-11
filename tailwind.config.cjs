@@ -2,13 +2,15 @@
 module.exports = {
   content: [
     "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
+    "./app/**/*.{vue,js,ts,jsx,tsx}",
     "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     extend: {},
   },
   plugins: [
-    require('flowbite/plugin')
+    require('flowbite/plugin'),
+    require('tailwindcss-inner-border'),
+
   ],
 }
