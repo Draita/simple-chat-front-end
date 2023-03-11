@@ -1,12 +1,12 @@
 <template>
     <div class="users-list">
-        <UserAndGroupContent @openMessages="goToChat"/>
+        <personOrGroup @openMessages="goToChat"/>
     </div>
 </template>
 
 <script>
 
-import UserAndGroupContent from "@/components/userAndGroupContent.vue"
+import personOrGroup from "@/components/personOrGroup.vue"
 
 
 export default {
@@ -17,7 +17,7 @@ export default {
         }
     },
     components: {
-        UserAndGroupContent,
+        personOrGroup,
     },
     methods:{
         goToChat(e){
