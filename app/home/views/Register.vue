@@ -6,9 +6,9 @@
             <header-top></header-top>
 
             <form @submit.prevent="register" class="header space-y-[41px] w-full pl-[66px] pt-[166px] z-30 text-[12px]">
-                <input v-model="username" class="inp h-[25px]" placeholder="USERNAME*">
-                <input v-model="email" class="inp h-[25px]" placeholder="EMAIL*">
-                <input v-model="password" class="inp h-[25px]" placeholder="PASSWORD*">
+                <input v-model="username" class="inp h-[25px] w-[202px]" placeholder="USERNAME*">
+                <input v-model="email" class="inp h-[25px] w-[202px]" placeholder="EMAIL*">
+                <input v-model="password" class="inp h-[25px] w-[202px]" placeholder="PASSWORD*">
                 <button type="submit" class=" w-[202px] bg-[#EEEEEE] active:bg-slate-400 h-[25px]"> REGISTER</button>
             </form>
         </div>
