@@ -15,6 +15,14 @@ import Messages from "@/chat-app/views/Messages.vue";
 import Menu from "@/chat-app/views/SettingsMenu.vue";
 import EditProfile from "@/chat-app/views/EditProfile.vue";
 
+import MenuHome from "@/chat-app/views/MenuHome.vue";
+
+import Chat from "@/chat-app/views/Chats.vue";
+import Friend from "@/chat-app/views/Friends.vue";
+
+
+
+
 
 
 // Create parent router
@@ -38,6 +46,15 @@ const router = createRouter({
         { path: "messages", name: "Messages", component: Messages },
         { path: "menu", name: "Menu", component: Menu },
         { path: "editprofile", name: "EditProfile", component: EditProfile },
+        {
+          path: "home",
+          name: "MenuHome",
+          component: MenuHome,
+          children:[
+            { path: "chat", name: "Chat", component: Chat },
+            { path: "friend", name: "Friend", component: Friend },
+          ]
+        }
 
     ],
 
