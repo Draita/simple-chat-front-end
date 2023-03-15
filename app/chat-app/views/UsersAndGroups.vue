@@ -7,7 +7,6 @@
                 <input v-model = "searchInput" class="inp w-[245px] h-[25px]" placeholder="SEARCH">
                 <img @click = "addFriend" class="mt-[9px] pr-[40px]" src="@/assets/icons/add.svg">
             </div>
-
             <UsersAndGroupslist />
 
         </div>

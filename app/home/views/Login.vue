@@ -41,7 +41,7 @@ export default {
         async login() {
             try {
                 const response = await APIRequests.login(this.email, this.password)
-                this.$router.push({name: 'UsersAndGroups'})
+                this.$router.push({name: 'Chats'})
             } catch{
                 this.wrong = true;
             }

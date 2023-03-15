@@ -1,29 +1,41 @@
 <template>
-    <div class="users-list">
-        <personOrGroup @openMessages="goToChat"/>
+     <div class="rooms-list " v-for="room in this.rooms">
+        <userDisplay :data = "room" :variant = "variant" @openMessages="goToChat"
+
+        @clickOverall = "goToChat"/>
     </div>
 </template>
 
 <script>
 
-import personOrGroup from "@/components/personOrGroup.vue"
+import userDisplay from "@/components/userDisplay.vue"
 
 
 export default {
     data() {
         return {
-            type: "settings"
+            variant: "room"
 
         }
     },
+    props:{
+        rooms:{
+            type: Object,
+            required: true,
+        }
+    },
     components: {
-        personOrGroup,
+        userDisplay,
     },
     methods:{
         goToChat(e){
-            console.log(e)
-            this.$router.push({name: 'Messages'})
+            console.log()
+            this.$router.push({name: 'Messages',  params: { roomId: e }})
         }
+    },
+    created(){
+        console.log(this.rooms)
+
     }
 }
 </script>
