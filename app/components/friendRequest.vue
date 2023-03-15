@@ -18,7 +18,7 @@ export default{
                 _id: "COOL ID",
                 username: "Niko Chan",
                 notification: true,
-                lastMessage: "How are you doing today, is everything alright with you? and what?and what?and what?and what?",
+
                 profilePicture: "https://i.imgur.com/G0eOXkZ.png"
 
             }
