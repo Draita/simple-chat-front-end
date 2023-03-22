@@ -5,7 +5,9 @@
         <img @click="addFriend" class="mb-[-9px] pr-[40px]" src="@/assets/icons/add.svg">
 
     </div>
-    <friendRequestsList v-if="!isLoading" :friends = "this.friends"></friendRequestsList>
+    <friendRequestsList @cancelFriendRequest="cancelFriendRequest" @refuseFriendReqeust="refuseFriendReqeust"
+    @acceptFriendRequest="acceptRequest"
+        :friends="this.friends"></friendRequestsList>
 </template>
 
 <script>
@@ -13,32 +15,75 @@
 
 import APIRequests from "@/APIRequests"
 import friendRequestsList from "@/components/friendRequestsList.vue"
+import { menuStore } from '@/stores/menuStorage'
+import io from "socket.io-client";
 
 
 
 export default {
+
     data() {
         return {
             friend: "",
             friends: "",
-            isLoading: true,
+            socket: null
+
         }
     },
     async created() {
-        const response = await APIRequests.getFriendRequests()
-        this.friends = response.data
-        this.isLoading = false
+        this.socket = window.socket
+        const menuStorage = menuStore();
+        this.friends = menuStorage.getFriendList()
+        this.socket.on("new friend", (friend) => {
+            console.log(friend)
 
+            // move functionality to menuStorage
+            this.friends.push(friend)
+        });
+
+
+        this.socket.on("remove request", (friendId) => {
+            console.log(this.friends)
+            const menuStorage = menuStore();
+           this.friends =  menuStorage.removeFriend(friendId)
+
+
+
+            // const index = this.friends.filter(item => item._id !== friendId);
+            // if (index !== -1) {
+            //     this.friends.splice(index, 1);
+            // }
+
+            // const test = this.friends.findIndex((obj) => obj.id === friendId);
+            // console.log(test)
+        });
     },
     components: {
         friendRequestsList
     },
     methods: {
         async addFriend() {
-            const response = await APIRequests.addFriend(this.friend)
-            this.friends.push(response.data)
+            console.log(this.friend)
+            this.socket.emit("send friend request", this.friend);
+
+            // const response = await APIRequests.addFriend(this.friend)
+            // this.friends.push(response.data)
+        },
+        cancelFriendRequest(e) {
+            this.socket.emit("cancel friend request", e._id);
+        },
+        refuseFriendReqeust(e) {
+            console.log(e)
+            this.socket.emit("refuse friend request", e._id);
+        },
+        acceptRequest(e) {
+            console.log(e)
+            this.socket.emit("accept friend reqeust", e._id);
         }
+
     },
+
+
 }
 
 </script>
