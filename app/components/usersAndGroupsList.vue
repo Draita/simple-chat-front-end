@@ -1,6 +1,7 @@
 <template>
-     <div class="rooms-list " v-for="room in this.rooms">
+     <div v-show="!this.loading" class="rooms-list " v-for="room in this.rooms">
         <userDisplay :data = "room" :variant = "variant" @openMessages="goToChat"
+        @updateList="updateList"
 
         @clickOverall = "goToChat"/>
     </div>
@@ -22,12 +23,19 @@ export default {
         rooms:{
             type: Object,
             required: true,
+            loading: true
         }
     },
     components: {
         userDisplay,
     },
     methods:{
+
+        clickOverall(){
+
+
+        },
+
         goToChat(e){
             console.log()
             this.$router.push({name: 'Messages',  params: { roomId: e }})
