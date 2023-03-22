@@ -1,8 +1,8 @@
 <template>
     <div class="users-list " v-for="friend in this.friends">
-        <userDisplay :data = "friend" :variant = "variant" @openMessages="goToChat"
-
-        @cancelFriendRequest = "cancel" @acceptFriendRequest = "accept"/>
+        <userDisplay :data="friend" :variant="variant" @openMessages="goToChat" @cancelFriendRequest="cancel"
+            @acceptFriendRequest="accept"
+            @refuseFriendReqeust="refuse" />
     </div>
 </template>
 
@@ -19,8 +19,8 @@ export default {
 
         }
     },
-    props:{
-        friends:{
+    props: {
+        friends: {
             type: Object,
             required: true
         }
@@ -29,23 +29,26 @@ export default {
         userDisplay,
     },
 
-    created(){
+    created() {
         console.log(this.friends)
     },
-    updated(){
+    updated() {
         console.log(this.friends)
 
 
     },
-    methods:{
-        cancel(e){
-            console.log(e)
-            APIRequests.cancelFriendRequest(e)
-            this.friends.splice(this.friends.indexOf(e), 1)
+    methods: {
+        cancel(e) {
+            this.$emit("cancelFriendRequest", e)
+            // APIRequests.cancelFriendRequest(e)
+            // this.friends.splice(this.friends.indexOf(e), 1)
         },
-        accept(e){
-            console.log(e)
-            APIRequests.acceptFriendRequest(e)
+        accept(e) {
+
+            this.$emit('acceptFriendRequest', e)
+        },
+        refuse(e) {
+            this.$emit('refuseFriendReqeust', e)
         }
     }
 
