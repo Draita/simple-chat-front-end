@@ -101,6 +101,19 @@ async function addFriend(usernameAndTag) {
   }
 }
 
+async function clearNotification(notificationId) {
+  try {
+    const response = axios.post("/notification/clear", {
+      notificationId,
+    });
+    return response;
+  } catch (error) {
+    console.log(error); // Handle error
+    return error;
+  }
+}
+
+
 async function saveProfile(data) {
   try {
     const response = await axios.post("/users/update_profile", data, {
@@ -125,4 +138,5 @@ export default {
   getRoomList,
   getUser,
   saveProfile,
+  clearNotification
 };
