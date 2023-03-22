@@ -56,6 +56,7 @@ export default {
   created() {
     const store = userStore();
     // do weird things to make a copy
+    this.image = JSON.parse(JSON.stringify(store.getProfilePicture()));
 
     this.userData = JSON.parse(JSON.stringify(store.getUser()));
   },
@@ -74,18 +75,37 @@ export default {
       this.saved = true;
 
     },
-    onFileChangeProfilePicture(e) {
+    async onFileChangeProfilePicture(e) {
       try {
-        const selectedFile = e.target.files[0]
-        this.bufferImage = selectedFile
+        const selectedFile = e.target.files[0];
+        this.bufferImage = selectedFile;
 
-        const file = e.target.files[0];
-        this.image= URL.createObjectURL(file);
+        const reader = new FileReader();
+        reader.readAsDataURL(selectedFile);
+        reader.onload = async () => {
+          const img = new Image();
+          img.src = reader.result;
+          img.onload = async () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
 
+            // Crop the image to 256x256
+            const size = Math.min(img.width, img.height);
+            canvas.width = 256;
+            canvas.height = 256;
+            ctx.drawImage(img, (img.width - size) / 2, (img.height - size) / 2, size, size, 0, 0, 256, 256);
+
+            // Convert the image to JPEG and compress to 60% quality
+            const jpegData = canvas.toDataURL('image/jpeg', 0.6);
+            const blob = await (await fetch(jpegData)).blob();
+            const file = new File([blob], "profile_picture.jpg", { type: "image/jpeg" });
+            this.bufferImage = file;
+            this.image = URL.createObjectURL(file);
+          };
+        };
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-
     },
     validateUsername(event) {
       const value = event.target.value;
