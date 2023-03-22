@@ -41,7 +41,17 @@ export default {
       showSettings: false,
     }
   },
-  async created() {
+  async mounted() {
+    console.log(this.$router.currentRoute._value.name)
+
+    if (this.$router.currentRoute._value.name == "Friends"){
+
+      this.currentPage = 'FRIENDS'
+      this.titleHeader = 'FRIENDS'
+    }
+
+
+
   },
   methods: {
     toggleProfileSettings() {
